@@ -1,0 +1,252 @@
+// @import "./node_modules/bootstrap/scss/functions";
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+
+$enable-rounded: false;
+
+// $caret-vertical-align: $caret-width * 0;
+
+$custom-primary: #0073e6;
+$custom-white: #eaeaea;
+$custom-transparent: transparent;
+
+$body-color-dark: #eaeaea;
+$body-bg-dark: #141414;
+
+$custom-colors: (
+  "custom-primary": $custom-primary,
+  "custom-white": $custom-white,
+  "custom-lightgray": $gray-200,
+  "custom-gray": $gray-500,
+  "custom-darkgray": $gray-600,
+  "custom-darkestgray": $gray-700,
+  "custom-ultradarkgray": $gray-800,
+  "custom-dark": $body-bg-dark
+);
+
+$box-shadow: 0 0.5rem 1rem rgba($custom-white, 0.15);
+$box-shadow-sm: 0 0.125rem 0.25rem rgba($custom-white, 0.075);
+$box-shadow-lg: 0 1rem 3rem rgba($custom-white, 0.175);
+$box-shadow-inset: inset 0 1px 2px rgba($custom-white, 0.075);
+
+$navbar-brand-font-size: 1rem;
+$navbar-brand-margin-end: 0.5rem;
+
+$navbar-dark-active-color: transparent;
+$navbar-toggler-focus-width: 0;
+
+$nav-link-font-size: 14px;
+
+$link-color: $custom-primary;
+$link-decoration: none;
+$link-hover-decoration: underline;
+
+$carousel-control-hover-opacity: 1;
+$carousel-control-width: 5%;
+$carousel-dark-control-icon-filter: unset;
+
+$form-check-input-width: 2em;
+$form-check-input-focus-border: $gray-600;
+$form-check-input-checked-border-color: $gray-600;
+$form-check-input-focus-box-shadow: 0 0 0 0.25rem rgba($gray-600, 0.25);
+$form-check-input-checked-bg-color: $custom-transparent;
+
+$custom-spacers: (
+  6: $spacer * 3.5,
+  7: $spacer * 4,
+  8: $spacer * 4.5,
+  9: $spacer * 5,
+  10: $spacer * 5.5,
+  11: $spacer * 6,
+  12: $spacer * 6.5,
+  13: $spacer * 7,
+  14: $spacer * 7.5,
+  15: $spacer * 8,
+  20: $spacer * 10
+);
+
+$h1-font-size: $font-size-base * 2;
+$h3-font-size: $font-size-base * 1.25;
+
+// @import "../mixins";
+@import "bootstrap/scss/mixins";
+
+@mixin button-custom(
+  $background,
+  $border,
+  $color: color-contrast($background),
+  $hover-background:
+    if(
+      $color == $color-contrast-light,
+      shade-color($background, $btn-hover-bg-shade-amount),
+      tint-color($background, $btn-hover-bg-tint-amount)
+    ),
+  $hover-border:
+    if(
+      $color == $color-contrast-light,
+      shade-color($border, $btn-hover-border-shade-amount),
+      tint-color($border, $btn-hover-border-tint-amount)
+    ),
+  $hover-color: color-contrast($hover-background),
+  $active-background:
+    if(
+      $color == $color-contrast-light,
+      shade-color($background, $btn-active-bg-shade-amount),
+      tint-color($background, $btn-active-bg-tint-amount)
+    ),
+  $active-border:
+    if(
+      $color == $color-contrast-light,
+      shade-color($border, $btn-active-border-shade-amount),
+      tint-color($border, $btn-active-border-tint-amount)
+    ),
+  $active-color: color-contrast($active-background),
+  $disabled-background: $background,
+  $disabled-border: $border,
+  $disabled-color: color-contrast($disabled-background)
+) {
+  --#{$prefix}btn-color: #{$color};
+  --#{$prefix}btn-bg: #{$background};
+  --#{$prefix}btn-border-color: #{$border};
+  --#{$prefix}btn-hover-color: #{$hover-color};
+  --#{$prefix}btn-hover-bg: #{$hover-background};
+  --#{$prefix}btn-hover-border-color: #{$hover-border};
+  --#{$prefix}btn-focus-shadow-rgb: #{to-rgb(mix($color, $border, 15%))};
+  --#{$prefix}btn-active-color: #{$active-color};
+  --#{$prefix}btn-active-bg: #{$active-background};
+  --#{$prefix}btn-active-border-color: #{$active-border};
+  --#{$prefix}btn-active-shadow: #{$btn-active-box-shadow};
+  --#{$prefix}btn-disabled-color: #{$disabled-color};
+  --#{$prefix}btn-disabled-bg: #{$disabled-background};
+  --#{$prefix}btn-disabled-border-color: #{$disabled-border};
+}
+
+@mixin button-outline-custom(
+  $color,
+  $color-hover: $custom-white,
+  $active-background: $gray-800,
+  $active-border: $color,
+  $active-color: $custom-white
+) {
+  --#{$prefix}btn-color: #{$color};
+  --#{$prefix}btn-border-color: #{$color};
+  --#{$prefix}btn-hover-color: #{$color-hover};
+  --#{$prefix}btn-hover-bg: #{$active-background};
+  --#{$prefix}btn-hover-border-color: #{$active-border};
+  --#{$prefix}btn-focus-shadow-rgb: #{to-rgb($color)};
+  --#{$prefix}btn-active-color: #{$active-color};
+  --#{$prefix}btn-active-bg: #{$active-background};
+  --#{$prefix}btn-active-border-color: #{$active-border};
+  --#{$prefix}btn-active-shadow: #{$btn-active-box-shadow};
+  --#{$prefix}btn-disabled-color: #{$color};
+  --#{$prefix}btn-disabled-bg: transparent;
+  --#{$prefix}btn-disabled-border-color: #{$color};
+  --#{$prefix}gradient: none;
+}
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+$spacers: map-merge($spacers, $custom-spacers);
+// @import "../maps";
+@import "bootstrap/scss/maps";
+
+// @import "../utilities";
+@import "bootstrap/scss/utilities";
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "px-width": (
+      property: width,
+      class: wd,
+      values: (
+        25: 25px,
+        32: 32px,
+        35: 35px,
+        40: 40px,
+        105: 105px
+      )
+    )
+  )
+);
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "px-height": (
+      property: height,
+      class: ht,
+      values: (
+        15: 15px,
+        16: 16px,
+        17: 17px,
+        18: 18px,
+        20: 20px,
+        25: 25px,
+        32: 32px,
+        35: 35px,
+        38: 38px,
+        40: 40px,
+        100: 100px,
+        105: 105px,
+        200: 200px
+      )
+    )
+  )
+);
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "custom-font-size": (
+      rfs: true,
+      property: font-size,
+      class: pfs,
+      values: (
+        9: 9px,
+        10: 10px,
+        11: 11px,
+        13: 13px,
+        14: 14px,
+        16: 16px,
+        18: 18px,
+        22: 22px,
+        24: 24px
+      )
+    )
+  )
+);
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "bg-opacity": (
+      css-var: true,
+      class: bg-opacity,
+      values: (
+        50: 0.5,
+        80: 0.8,
+        85: 0.85,
+        90: 0.9,
+        95: 0.95
+      )
+    )
+  )
+);
+
+// @import "../bootstrap";
+@import "bootstrap/scss/bootstrap";
+
+@each $color, $value in $theme-colors {
+  .btn-outline-#{$color} {
+    @include button-outline-custom($value);
+  }
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  background-color: #000;
+  opacity: 0.5;
+  &:hover {
+    opacity: 0.8;
+  }
+}
