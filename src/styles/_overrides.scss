@@ -13,6 +13,10 @@ $custom-transparent: transparent;
 $body-color-dark: #eaeaea;
 $body-bg-dark: #141414;
 
+$custom-darkblue: #101037;
+$custom-mediumblue: #1b1c46;
+$custom-yellow: #f7d26e;
+
 $custom-colors: (
   "custom-primary": $custom-primary,
   "custom-white": $custom-white,
@@ -21,7 +25,10 @@ $custom-colors: (
   "custom-darkgray": $gray-600,
   "custom-darkestgray": $gray-700,
   "custom-ultradarkgray": $gray-800,
-  "custom-dark": $body-bg-dark
+  "custom-dark": $body-bg-dark,
+  "custom-darkblue": $custom-darkblue,
+  "custom-mediumblue": $custom-mediumblue,
+  "custom-yellow": $custom-yellow
 );
 
 $box-shadow: 0 0.5rem 1rem rgba($custom-white, 0.15);
@@ -159,11 +166,38 @@ $utilities: map-merge(
       property: width,
       class: wd,
       values: (
+        20: 20px,
         25: 25px,
         32: 32px,
         35: 35px,
         40: 40px,
         105: 105px
+      )
+    )
+  )
+);
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "line-height": (
+      property: line-height,
+      class: lh,
+      values: (
+        0: 16px
+      )
+    )
+  )
+);
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "custom-max-width": (
+      property: width,
+      class: custom-mw,
+      values: (
+        500: 500px
       )
     )
   )
@@ -205,12 +239,25 @@ $utilities: map-merge(
         9: 9px,
         10: 10px,
         11: 11px,
+        12: 12px,
         13: 13px,
         14: 14px,
+        15: 15px,
         16: 16px,
+        17: 17px,
         18: 18px,
+        19: 19px,
+        20: 20px,
+        21: 21px,
         22: 22px,
-        24: 24px
+        23: 23px,
+        24: 24px,
+        36: 36px,
+        48: 48px,
+        60: 60px,
+        72: 72px,
+        84: 84px,
+        96: 96px
       )
     )
   )

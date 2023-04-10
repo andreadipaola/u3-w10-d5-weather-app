@@ -2,8 +2,8 @@ import { Component } from "react";
 import { Alert, Card, Col, Container, Row, Spinner } from "react-bootstrap";
 const API_URL = "https://api.openweathermap.org/data/2.5";
 const API_KEY = "a72f6d17ce13bd38f1345e900ea0df0c";
-const lat = 41.9099856;
-const lon = 12.3990879;
+// const lat = 41.9099856;
+// const lon = 12.3990879;
 
 class Forecast extends Component {
   state = {
@@ -19,7 +19,9 @@ class Forecast extends Component {
 
   fetchWeather = async () => {
     try {
-      const response = await fetch(`${API_URL}/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`);
+      const response = await fetch(
+        `${API_URL}/forecast?lat=${this.props.lat}&lon=${this.props.lon}&appid=${API_KEY}&units=metric`
+      );
 
       if (response.ok) {
         const data = await response.json();
@@ -69,6 +71,7 @@ class Forecast extends Component {
           <Spinner animation="border" role="status">
             <span className="visually-hidden">Loading...</span>
           </Spinner>
+          <NewComponent />
         )}
       </>
     );
