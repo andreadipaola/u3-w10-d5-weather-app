@@ -1,59 +1,58 @@
-import { Component } from "react";
-import { Button, Form, InputGroup, Row } from "react-bootstrap";
+import { useState } from "react";
+import { Form, InputGroup, Row } from "react-bootstrap";
 const API_URL = "http://api.openweathermap.org/geo/1.0/";
 const API_KEY = "a72f6d17ce13bd38f1345e900ea0df0c";
 
-class SearchBar extends Component {
-  state = {
-    weatherObj: null,
-    error: false,
-    errorMsg: "",
-    isLoading: true
+const SearchBar = ({ fetchWeatherFunction }) => {
+  const [searchInput, setSearchInput] = useState(null);
+  const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+
+  // navigator.geolocation.getCurrentPosition(function (position) {
+  //   setLat(position.coords.latitude);
+  //   setLon(position.coords.longitude);
+  // });
+
+  const handleChange = (event) => {
+    setSearchInput(event.target.value);
+    fetchWeatherFunction(event.target.value);
   };
 
-  handleKeyDown = (event) => {
-    if (event.key === "Enter") {
-      console.log("you pressed enter key");
-      this.fetchWeather(event.target.value);
-    }
-  };
-
-  handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    this.fetchWeather(event.target.searchInput.value);
+    fetchCoordinates();
     event.target.reset();
   };
 
-  fetchWeather = async (value) => {
+  const fetchCoordinates = async () => {
     try {
-      const response = await fetch(`${API_URL}/direct?q=${value}&appid=${API_KEY}`);
-
-      if (response.ok) {
-        const data = await response.json();
+      const res = await fetch(`${API_URL}/direct?q=${searchInput}&appid=${API_KEY}`);
+      if (res.ok) {
+        const data = await res.json();
         console.log(data);
-        this.setState({ weatherObj: data, isLoading: false });
       } else {
-        this.setState({ error: true, isLoading: false });
+        setError(true);
       }
     } catch (error) {
-      this.setState({ error: true, errorMsg: error.message, isLoading: false });
+      setError(true);
+      setErrorMsg(error.message);
     }
   };
 
-  render() {
-    return (
-      <Row className="w-100 mb-4 shadow-sm">
+  return (
+    <Row className="w-100 mb-4 shadow-sm">
+      <Form onSubmit={handleSubmit}>
         <InputGroup className="p-0 ">
           <Form.Control
             placeholder="Inserisci una città"
-            aria-label="Recipient's username"
-            aria-describedby="basic-addon2"
+            value={searchInput}
+            onChange={handleChange}
             className="rounded-5"
           />
         </InputGroup>
-      </Row>
-    );
-  }
-}
+      </Form>
+    </Row>
+  );
+};
 
 export default SearchBar;

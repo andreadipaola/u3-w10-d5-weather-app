@@ -1,6 +1,5 @@
-import { Card, Col, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import moment from "moment";
-import { GrLocation, GrRefresh } from "react-icons/gr";
 import { BsGeoAltFill, BsArrowRepeat, BsWind, BsDroplet, BsEye } from "react-icons/bs";
 
 const refresh = () => {
