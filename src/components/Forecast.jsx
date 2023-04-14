@@ -1,81 +1,41 @@
-import { Component } from "react";
-import { Alert, Card, Col, Container, Row, Spinner } from "react-bootstrap";
-const API_URL = "https://api.openweathermap.org/data/2.5";
-const API_KEY = "a72f6d17ce13bd38f1345e900ea0df0c";
-// const lat = 41.9099856;
-// const lon = 12.3990879;
+import { Col, Container, Row } from "react-bootstrap";
+import moment from "moment";
 
-class Forecast extends Component {
-  state = {
-    weatherObj: null,
-    error: false,
-    errorMsg: "",
-    isLoading: true
-  };
-
-  componentDidMount = () => {
-    this.fetchWeather();
-  };
-
-  fetchWeather = async () => {
-    try {
-      const response = await fetch(
-        `${API_URL}/forecast?lat=${this.props.lat}&lon=${this.props.lon}&appid=${API_KEY}&units=metric`
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        // console.log(data);
-        this.setState({ weatherObj: data, isLoading: false });
-      } else {
-        this.setState({ error: true, isLoading: false });
-      }
-    } catch (error) {
-      this.setState({ error: true, errorMsg: error.message, isLoading: false });
-    }
-  };
-
-  render() {
-    return (
-      <>
-        {this.state.error && !this.state.isLoading && (
-          <Alert variant="danger">{this.state.errorMsg ? this.state.errorMsg : "Errore nel reperire i dati"}</Alert>
-        )}
-        {this.state.weatherObj ? (
-          <div>
-            <div className="d-flex justify-content-between">
-              <span>Today</span>
-              <span>Tomorrow</span>
-              <span>Next 7 Days</span>
-            </div>
-            <Container>
-              <Row className="gy-2">
-                {this.state.weatherObj.list.slice(0, 8).map((singleWeather, index) => (
-                  <Col key={`Item-1.${index}`}>
-                    <Card>
-                      <Card.Img variant="top" src="holder.js/100px180" />
-                      <Card.Body>
-                        <Card.Text>{singleWeather.dt}</Card.Text>
-                        <Card.Text>
-                          {singleWeather.main.temp}
-                          <span></span>&#8451;
-                        </Card.Text>
-                      </Card.Body>
-                    </Card>
-                  </Col>
-                ))}
-              </Row>
-            </Container>
-          </div>
-        ) : (
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-          <NewComponent />
-        )}
-      </>
-    );
-  }
-}
+const Forecast = ({ forecastObj }) => {
+  return (
+    <>
+      <div>
+        <div className="d-flex justify-content-between mb-3"></div>
+        <Container>
+          <Row className="gy-3">
+            {forecastObj.list
+              .filter((_, index) => index % 8 === 0)
+              .map((singleWeather, index) => (
+                <Col
+                  key={`Item-1.${index}`}
+                  xs={12}
+                  className="bg-custom-mediumblue rounded-5 p-4 d-flex justify-content-between align-items-center shadow-sm"
+                >
+                  <span className="pfs-18 fw-bold mb-2">{moment(singleWeather.dt * 1000).format("ddd, D")}</span>
+                  <div className="d-flex flex-column align-items-center justify-content-center">
+                    <img
+                      src={`http://openweathermap.org/img/w/${singleWeather.weather[0].icon}.png`}
+                      alt="weather icon"
+                    />
+                    {/* <BsWind className="mb-2 pfs-24 text-custom-yellow" /> */}
+                    <span className="text-custom-gray pfs-12">{singleWeather.weather[0].description}</span>
+                  </div>
+                  <span className="text-custom-gray pfs-18">{Math.floor(singleWeather.main.temp)} &deg;C</span>
+                </Col>
+              ))}
+          </Row>
+        </Container>
+      </div>
+      <div className="mt-5">
+        <p>Made with &#10084; in Italy, &copy; 2023 Andrea Di Paola</p>
+      </div>
+    </>
+  );
+};
 
 export default Forecast;
